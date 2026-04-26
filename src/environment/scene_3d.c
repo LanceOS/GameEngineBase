@@ -8,8 +8,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include <sys/stat.h>
+#if defined(_WIN32) || defined(_WIN64)
+#include <direct.h>
+#include <io.h>
+#define getcwd _getcwd
+#else
 #include <unistd.h>
+#endif
 
 #ifndef PATH_MAX
 #define PATH_MAX 4096
@@ -117,8 +124,16 @@ static const char *renderer_backend_directory(bgfx_renderer_type_t type) {
 }
 
 static bool directory_exists(const char *path) {
+#if defined(_WIN32) || defined(_WIN64)
+    struct _stat info;
+    if (_stat(path, &info) != 0) {
+        return false;
+    }
+    return (info.st_mode & _S_IFDIR) != 0;
+#else
     struct stat info;
     return stat(path, &info) == 0 && S_ISDIR(info.st_mode);
+#endif
 }
 
 static bool format_path(char *out, size_t out_size, const char *prefix, const char *suffix) {
