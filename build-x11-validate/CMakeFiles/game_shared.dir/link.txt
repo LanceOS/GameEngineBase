@@ -1,2 +1,0 @@
-/usr/bin/ar qc libgame_shared.a CMakeFiles/game_shared.dir/src/renderer/bgfx_renderer.c.o CMakeFiles/game_shared.dir/src/ui/start_menu.c.o CMakeFiles/game_shared.dir/src/app/game_app.c.o CMakeFiles/game_shared.dir/src/environment/camera_3d.cpp.o CMakeFiles/game_shared.dir/src/environment/scene_3d.cpp.o CMakeFiles/game_shared.dir/src/environment/environment_3d.cpp.o
-/usr/bin/ranlib libgame_shared.a

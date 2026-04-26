@@ -1,3 +1,0 @@
-/home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-subbuild/CMakeFiles/bgfx_cmake-populate.dir
-/home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-subbuild/CMakeFiles/edit_cache.dir
-/home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-subbuild/CMakeFiles/rebuild_cache.dir
