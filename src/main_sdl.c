@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#define SDL_MAIN_HANDLED
 #include <SDL.h>
 #include "environment/camera_3d.h"
 #include "renderer/bgfx_renderer.h"
@@ -14,6 +15,8 @@ static uint16_t to_u16(uint32_t value) {
 
 int main(void) {
     SDLGameState game;
+
+    SDL_SetMainReady();
 
     if (!sdl_window_init(&game, 800, 600, "Game")) {
         return EXIT_FAILURE;
