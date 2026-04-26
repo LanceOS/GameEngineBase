@@ -24,16 +24,20 @@ jobs:
         brew update
         brew install cmake git sdl2
 
-    - name: Setup vcpkg (Windows)
+    - name: Checkout vcpkg (Windows)
       if: matrix.os == 'windows-latest'
-      uses: lukka/get-vcpkg@v9
+      shell: pwsh
+      run: |
+        $vcpkgRoot = Join-Path $env:GITHUB_WORKSPACE 'vcpkg'
+        git clone --depth 1 https://github.com/microsoft/vcpkg.git $vcpkgRoot
+        & (Join-Path $vcpkgRoot 'bootstrap-vcpkg.bat')
 
     - name: Install SDL2 via vcpkg (Windows)
       if: matrix.os == 'windows-latest'
       shell: pwsh
       run: |
-        & "$env:VCPKG_ROOT/bootstrap-vcpkg.bat"
-        & "$env:VCPKG_ROOT/vcpkg.exe" install sdl2:x64-windows
+        $vcpkgRoot = Join-Path $env:GITHUB_WORKSPACE 'vcpkg'
+        & (Join-Path $vcpkgRoot 'vcpkg.exe') install sdl2:x64-windows
 
     - name: Configure & Build (Linux/macOS)
       if: matrix.os != 'windows-latest'
@@ -45,5 +49,6 @@ jobs:
       if: matrix.os == 'windows-latest'
       shell: pwsh
       run: |
-        cmake -S . -B build -DUSE_SDL2=ON "-DCMAKE_TOOLCHAIN_FILE=$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
+        $vcpkgRoot = Join-Path $env:GITHUB_WORKSPACE 'vcpkg'
+        cmake -S . -B build -DUSE_SDL2=ON "-DCMAKE_TOOLCHAIN_FILE=$(Join-Path $vcpkgRoot 'scripts/buildsystems/vcpkg.cmake')"
         cmake --build build --config Release
