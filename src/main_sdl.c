@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include "environment/camera_3d.h"
 #include "renderer/bgfx_renderer.h"
 #include "environment/environment_3d.h"

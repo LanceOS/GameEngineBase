@@ -1,7 +1,7 @@
 #ifndef SDL_WINDOW_H
 #define SDL_WINDOW_H
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #include <stdbool.h>
 #include <stdint.h>

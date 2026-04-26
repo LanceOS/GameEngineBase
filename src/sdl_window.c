@@ -1,6 +1,6 @@
 #include "sdl_window.h"
 
-#include <SDL2/SDL_syswm.h>
+#include <SDL_syswm.h>
 
 #include <stdint.h>
 #include <stdio.h>
