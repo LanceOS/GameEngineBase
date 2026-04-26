@@ -1,0 +1,49 @@
+name: CI
+
+on: [ push, pull_request ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, macos-latest, windows-latest ]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install dependencies (Linux)
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential cmake git libsdl2-dev
+
+    - name: Install dependencies (macOS)
+      if: matrix.os == 'macos-latest'
+      run: |
+        brew update
+        brew install cmake git sdl2
+
+    - name: Setup vcpkg (Windows)
+      if: matrix.os == 'windows-latest'
+      uses: lukka/get-vcpkg@v9
+
+    - name: Install SDL2 via vcpkg (Windows)
+      if: matrix.os == 'windows-latest'
+      shell: pwsh
+      run: |
+        & "$env:VCPKG_ROOT/bootstrap-vcpkg.bat"
+        & "$env:VCPKG_ROOT/vcpkg.exe" install sdl2:x64-windows
+
+    - name: Configure & Build (Linux/macOS)
+      if: matrix.os != 'windows-latest'
+      run: |
+        cmake -S . -B build -DUSE_SDL2=ON
+        cmake --build build --config Release
+
+    - name: Configure & Build (Windows)
+      if: matrix.os == 'windows-latest'
+      shell: pwsh
+      run: |
+        cmake -S . -B build -DUSE_SDL2=ON "-DCMAKE_TOOLCHAIN_FILE=$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
+        cmake --build build --config Release
