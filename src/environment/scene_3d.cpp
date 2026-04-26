@@ -22,48 +22,26 @@ static constexpr uint64_t kStateFlags = BGFX_STATE_WRITE_RGB | BGFX_STATE_WRITE_
 
 struct Vertex {
     float position[3];
-    float normal[3];
 };
 
-static constexpr std::array<Vertex, 24> kCubeVertices = {{
-    {{-0.5f, -0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}},
-    {{ 0.5f, -0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}},
-    {{ 0.5f,  0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}},
-    {{-0.5f,  0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}},
-
-    {{ 0.5f, -0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}},
-    {{-0.5f, -0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}},
-    {{-0.5f,  0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}},
-    {{ 0.5f,  0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}},
-
-    {{-0.5f, -0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}},
-    {{-0.5f, -0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}},
-    {{-0.5f,  0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}},
-    {{-0.5f,  0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}},
-
-    {{ 0.5f, -0.5f,  0.5f}, { 1.0f,  0.0f,  0.0f}},
-    {{ 0.5f, -0.5f, -0.5f}, { 1.0f,  0.0f,  0.0f}},
-    {{ 0.5f,  0.5f, -0.5f}, { 1.0f,  0.0f,  0.0f}},
-    {{ 0.5f,  0.5f,  0.5f}, { 1.0f,  0.0f,  0.0f}},
-
-    {{-0.5f,  0.5f,  0.5f}, { 0.0f,  1.0f,  0.0f}},
-    {{ 0.5f,  0.5f,  0.5f}, { 0.0f,  1.0f,  0.0f}},
-    {{ 0.5f,  0.5f, -0.5f}, { 0.0f,  1.0f,  0.0f}},
-    {{-0.5f,  0.5f, -0.5f}, { 0.0f,  1.0f,  0.0f}},
-
-    {{-0.5f, -0.5f, -0.5f}, { 0.0f, -1.0f,  0.0f}},
-    {{ 0.5f, -0.5f, -0.5f}, { 0.0f, -1.0f,  0.0f}},
-    {{ 0.5f, -0.5f,  0.5f}, { 0.0f, -1.0f,  0.0f}},
-    {{-0.5f, -0.5f,  0.5f}, { 0.0f, -1.0f,  0.0f}},
+static constexpr std::array<Vertex, 8> kCubeVertices = {{
+    {{-1.0f,  1.0f,  1.0f}},
+    {{ 1.0f,  1.0f,  1.0f}},
+    {{-1.0f, -1.0f,  1.0f}},
+    {{ 1.0f, -1.0f,  1.0f}},
+    {{-1.0f,  1.0f, -1.0f}},
+    {{ 1.0f,  1.0f, -1.0f}},
+    {{-1.0f, -1.0f, -1.0f}},
+    {{ 1.0f, -1.0f, -1.0f}},
 }};
 
 static constexpr std::array<uint16_t, 36> kCubeIndices = {{
-     0,  1,  2,  0,  2,  3,
-     4,  5,  6,  4,  6,  7,
-     8,  9, 10,  8, 10, 11,
-    12, 13, 14, 12, 14, 15,
-    16, 17, 18, 16, 18, 19,
-    20, 21, 22, 20, 22, 23,
+     0,  1,  2,  1,  3,  2,
+     4,  6,  5,  5,  6,  7,
+     0,  2,  4,  4,  2,  6,
+     1,  5,  3,  5,  7,  3,
+     0,  4,  1,  4,  5,  1,
+     2,  3,  6,  6,  3,  7,
 }};
 
 static bool handle_is_valid(bgfx_program_handle_t handle) {
@@ -75,10 +53,6 @@ static bool handle_is_valid(bgfx_vertex_buffer_handle_t handle) {
 }
 
 static bool handle_is_valid(bgfx_index_buffer_handle_t handle) {
-    return handle.idx != UINT16_MAX;
-}
-
-static bool handle_is_valid(bgfx_uniform_handle_t handle) {
     return handle.idx != UINT16_MAX;
 }
 
@@ -181,7 +155,7 @@ static bool encode_cube_mesh(bgfx_vertex_buffer_handle_t *vertex_buffer, bgfx_in
     bgfx_vertex_layout_t layout;
     bgfx_vertex_layout_begin(&layout, bgfx_get_renderer_type());
     bgfx_vertex_layout_add(&layout, BGFX_ATTRIB_POSITION, 3, BGFX_ATTRIB_TYPE_FLOAT, false, false);
-    bgfx_vertex_layout_add(&layout, BGFX_ATTRIB_NORMAL, 3, BGFX_ATTRIB_TYPE_UINT8, true, false);
+    bgfx_vertex_layout_add(&layout, BGFX_ATTRIB_COLOR0, 4, BGFX_ATTRIB_TYPE_UINT8, true, false);
     bgfx_vertex_layout_end(&layout);
 
     const uint16_t stride = bgfx_vertex_layout_get_stride(&layout);
@@ -192,15 +166,10 @@ static bool encode_cube_mesh(bgfx_vertex_buffer_handle_t *vertex_buffer, bgfx_in
         const Vertex &vertex = kCubeVertices[index];
 
         float packed_position[4] = {vertex.position[0], vertex.position[1], vertex.position[2], 1.0f};
-        float packed_normal[4] = {
-            vertex.normal[0] * 0.5f + 0.5f,
-            vertex.normal[1] * 0.5f + 0.5f,
-            vertex.normal[2] * 0.5f + 0.5f,
-            0.0f,
-        };
+        float packed_color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
 
         bgfx_vertex_pack(packed_position, false, BGFX_ATTRIB_POSITION, &layout, vertex_memory->data, index);
-        bgfx_vertex_pack(packed_normal, true, BGFX_ATTRIB_NORMAL, &layout, vertex_memory->data, index);
+        bgfx_vertex_pack(packed_color, true, BGFX_ATTRIB_COLOR0, &layout, vertex_memory->data, index);
     }
 
     *vertex_buffer = bgfx_create_vertex_buffer(vertex_memory, &layout, 0);
@@ -212,18 +181,11 @@ static bool encode_cube_mesh(bgfx_vertex_buffer_handle_t *vertex_buffer, bgfx_in
     return handle_is_valid(*vertex_buffer) && handle_is_valid(*index_buffer);
 }
 
-static void pack_transform(float out_mtx[16], float sx, float sy, float sz, float tx, float ty, float tz) {
-    bx::mtxSRT(out_mtx, sx, sy, sz, 0.0f, 0.0f, 0.0f, tx, ty, tz);
-}
-
-static void submit_instance(bgfx_view_id_t view_id, bgfx_program_handle_t program, bgfx_vertex_buffer_handle_t vertex_buffer, bgfx_index_buffer_handle_t index_buffer, bgfx_uniform_handle_t time_uniform, float time_seconds, const float model[16]) {
-    const float uniforms[4] = {time_seconds, 0.0f, 0.0f, 0.0f};
-
+static void submit_block(bgfx_view_id_t view_id, bgfx_program_handle_t program, bgfx_vertex_buffer_handle_t vertex_buffer, bgfx_index_buffer_handle_t index_buffer, const float model[16]) {
     bgfx_set_transform(model, 1);
     bgfx_set_vertex_buffer(0, vertex_buffer, 0, static_cast<uint32_t>(kCubeVertices.size()));
     bgfx_set_index_buffer(index_buffer, 0, static_cast<uint32_t>(kCubeIndices.size()));
     bgfx_set_state(kStateFlags, 0);
-    bgfx_set_uniform(time_uniform, uniforms, 1);
     bgfx_submit(view_id, program, 0, 0);
 }
 
@@ -233,17 +195,16 @@ struct Scene3D {
     bgfx_program_handle_t program;
     bgfx_vertex_buffer_handle_t vertex_buffer;
     bgfx_index_buffer_handle_t index_buffer;
-    bgfx_uniform_handle_t time_uniform;
     bool initialized;
-    float time_seconds;
+    float model[16];
 
     Scene3D()
         : program(BGFX_INVALID_HANDLE)
         , vertex_buffer(BGFX_INVALID_HANDLE)
         , index_buffer(BGFX_INVALID_HANDLE)
-        , time_uniform(BGFX_INVALID_HANDLE)
         , initialized(false)
-        , time_seconds(0.0f) {
+        , model{0.0f} {
+        bx::mtxIdentity(model);
     }
 
     ~Scene3D() {
@@ -260,8 +221,8 @@ struct Scene3D {
         }
 
         const char *backend = renderer_backend_directory(bgfx_get_renderer_type());
-        bgfx_shader_handle_t vertex_shader = load_shader(shader_root, backend, "vs_mesh");
-        bgfx_shader_handle_t fragment_shader = load_shader(shader_root, backend, "fs_mesh");
+        bgfx_shader_handle_t vertex_shader = load_shader(shader_root, backend, "vs_cubes");
+        bgfx_shader_handle_t fragment_shader = load_shader(shader_root, backend, "fs_cubes");
 
         if (!handle_is_valid(vertex_shader) || !handle_is_valid(fragment_shader)) {
             if (handle_is_valid(vertex_shader)) {
@@ -281,13 +242,6 @@ struct Scene3D {
             return false;
         }
 
-        time_uniform = bgfx_create_uniform("u_time", BGFX_UNIFORM_TYPE_VEC4, 1);
-        if (!handle_is_valid(time_uniform)) {
-            std::fputs("scene_3d: bgfx_create_uniform failed for u_time.\n", stderr);
-            shutdown();
-            return false;
-        }
-
         if (!encode_cube_mesh(&vertex_buffer, &index_buffer)) {
             std::fputs("scene_3d: failed to build cube mesh buffers.\n", stderr);
             shutdown();
@@ -303,15 +257,7 @@ struct Scene3D {
             return;
         }
 
-        time_seconds += 1.0f / 60.0f;
-
-        float floor_mtx[16];
-        float object_mtx[16];
-        pack_transform(floor_mtx, 12.0f, 0.1f, 12.0f, 0.0f, -0.05f, 0.0f);
-        pack_transform(object_mtx, 0.75f, 1.5f, 0.75f, 0.0f, 0.75f, 0.0f);
-
-        submit_instance(kViewId, program, vertex_buffer, index_buffer, time_uniform, time_seconds, floor_mtx);
-        submit_instance(kViewId, program, vertex_buffer, index_buffer, time_uniform, time_seconds, object_mtx);
+        submit_block(kViewId, program, vertex_buffer, index_buffer, model);
     }
 
     void shutdown() {
@@ -330,13 +276,7 @@ struct Scene3D {
             index_buffer = BGFX_INVALID_HANDLE;
         }
 
-        if (handle_is_valid(time_uniform)) {
-            bgfx_destroy_uniform(time_uniform);
-            time_uniform = BGFX_INVALID_HANDLE;
-        }
-
         initialized = false;
-        time_seconds = 0.0f;
     }
 };
 
