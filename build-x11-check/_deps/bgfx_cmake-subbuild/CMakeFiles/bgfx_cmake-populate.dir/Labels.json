@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/lance/Documents/Code/Game/build-x11-check/_deps/bgfx_cmake-subbuild/CMakeFiles/bgfx_cmake-populate"
+		},
+		{
+			"file" : "/home/lance/Documents/Code/Game/build-x11-check/_deps/bgfx_cmake-subbuild/CMakeFiles/bgfx_cmake-populate.rule"
+		},
+		{
+			"file" : "/home/lance/Documents/Code/Game/build-x11-check/_deps/bgfx_cmake-subbuild/CMakeFiles/bgfx_cmake-populate-complete.rule"
+		},
+		{
+			"file" : "/home/lance/Documents/Code/Game/build-x11-check/_deps/bgfx_cmake-subbuild/bgfx_cmake-populate-prefix/src/bgfx_cmake-populate-stamp/bgfx_cmake-populate-build.rule"
+		},
+		{
+			"file" : "/home/lance/Documents/Code/Game/build-x11-check/_deps/bgfx_cmake-subbuild/bgfx_cmake-populate-prefix/src/bgfx_cmake-populate-stamp/bgfx_cmake-populate-configure.rule"
+		},
+		{
+			"file" : "/home/lance/Documents/Code/Game/build-x11-check/_deps/bgfx_cmake-subbuild/bgfx_cmake-populate-prefix/src/bgfx_cmake-populate-stamp/bgfx_cmake-populate-download.rule"
+		},
+		{
+			"file" : "/home/lance/Documents/Code/Game/build-x11-check/_deps/bgfx_cmake-subbuild/bgfx_cmake-populate-prefix/src/bgfx_cmake-populate-stamp/bgfx_cmake-populate-install.rule"
+		},
+		{
+			"file" : "/home/lance/Documents/Code/Game/build-x11-check/_deps/bgfx_cmake-subbuild/bgfx_cmake-populate-prefix/src/bgfx_cmake-populate-stamp/bgfx_cmake-populate-mkdir.rule"
+		},
+		{
+			"file" : "/home/lance/Documents/Code/Game/build-x11-check/_deps/bgfx_cmake-subbuild/bgfx_cmake-populate-prefix/src/bgfx_cmake-populate-stamp/bgfx_cmake-populate-patch.rule"
+		},
+		{
+			"file" : "/home/lance/Documents/Code/Game/build-x11-check/_deps/bgfx_cmake-subbuild/bgfx_cmake-populate-prefix/src/bgfx_cmake-populate-stamp/bgfx_cmake-populate-test.rule"
+		},
+		{
+			"file" : "/home/lance/Documents/Code/Game/build-x11-check/_deps/bgfx_cmake-subbuild/bgfx_cmake-populate-prefix/src/bgfx_cmake-populate-stamp/bgfx_cmake-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"bgfx_cmake-populate"
+		],
+		"name" : "bgfx_cmake-populate"
+	}
+}

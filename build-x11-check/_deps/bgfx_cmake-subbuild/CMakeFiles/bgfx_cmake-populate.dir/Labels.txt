@@ -1,0 +1,14 @@
+# Target labels
+ bgfx_cmake-populate
+# Source files and their labels
+/home/lance/Documents/Code/Game/build-x11-check/_deps/bgfx_cmake-subbuild/CMakeFiles/bgfx_cmake-populate
+/home/lance/Documents/Code/Game/build-x11-check/_deps/bgfx_cmake-subbuild/CMakeFiles/bgfx_cmake-populate.rule
+/home/lance/Documents/Code/Game/build-x11-check/_deps/bgfx_cmake-subbuild/CMakeFiles/bgfx_cmake-populate-complete.rule
+/home/lance/Documents/Code/Game/build-x11-check/_deps/bgfx_cmake-subbuild/bgfx_cmake-populate-prefix/src/bgfx_cmake-populate-stamp/bgfx_cmake-populate-build.rule
+/home/lance/Documents/Code/Game/build-x11-check/_deps/bgfx_cmake-subbuild/bgfx_cmake-populate-prefix/src/bgfx_cmake-populate-stamp/bgfx_cmake-populate-configure.rule
+/home/lance/Documents/Code/Game/build-x11-check/_deps/bgfx_cmake-subbuild/bgfx_cmake-populate-prefix/src/bgfx_cmake-populate-stamp/bgfx_cmake-populate-download.rule
+/home/lance/Documents/Code/Game/build-x11-check/_deps/bgfx_cmake-subbuild/bgfx_cmake-populate-prefix/src/bgfx_cmake-populate-stamp/bgfx_cmake-populate-install.rule
+/home/lance/Documents/Code/Game/build-x11-check/_deps/bgfx_cmake-subbuild/bgfx_cmake-populate-prefix/src/bgfx_cmake-populate-stamp/bgfx_cmake-populate-mkdir.rule
+/home/lance/Documents/Code/Game/build-x11-check/_deps/bgfx_cmake-subbuild/bgfx_cmake-populate-prefix/src/bgfx_cmake-populate-stamp/bgfx_cmake-populate-patch.rule
+/home/lance/Documents/Code/Game/build-x11-check/_deps/bgfx_cmake-subbuild/bgfx_cmake-populate-prefix/src/bgfx_cmake-populate-stamp/bgfx_cmake-populate-test.rule
+/home/lance/Documents/Code/Game/build-x11-check/_deps/bgfx_cmake-subbuild/bgfx_cmake-populate-prefix/src/bgfx_cmake-populate-stamp/bgfx_cmake-populate-update.rule

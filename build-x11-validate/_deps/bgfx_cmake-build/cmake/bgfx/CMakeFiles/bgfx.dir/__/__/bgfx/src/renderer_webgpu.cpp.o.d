@@ -1,0 +1,180 @@
+_deps/bgfx_cmake-build/cmake/bgfx/CMakeFiles/bgfx.dir/__/__/bgfx/src/renderer_webgpu.cpp.o: \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bgfx/src/renderer_webgpu.cpp \
+ /usr/include/stdc-predef.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bgfx/src/bgfx_p.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/platform.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bgfx/include/bgfx/bgfx.h \
+ /usr/lib/gcc/x86_64-redhat-linux/15/include/stdarg.h \
+ /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h \
+ /usr/include/stdint.h /usr/include/bits/libc-header-start.h \
+ /usr/include/features.h /usr/include/features-time64.h \
+ /usr/include/bits/wordsize.h /usr/include/bits/timesize.h \
+ /usr/include/sys/cdefs.h /usr/include/bits/long-double.h \
+ /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
+ /usr/include/bits/types.h /usr/include/bits/typesizes.h \
+ /usr/include/bits/time64.h /usr/include/bits/wchar.h \
+ /usr/include/bits/stdint-intn.h /usr/include/bits/stdint-uintn.h \
+ /usr/include/bits/stdint-least.h /usr/include/c++/15/stdlib.h \
+ /usr/include/c++/15/cstdlib \
+ /usr/include/c++/15/x86_64-redhat-linux/bits/c++config.h \
+ /usr/include/c++/15/x86_64-redhat-linux/bits/os_defines.h \
+ /usr/include/c++/15/x86_64-redhat-linux/bits/cpu_defines.h \
+ /usr/include/c++/15/pstl/pstl_config.h /usr/include/stdlib.h \
+ /usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h \
+ /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
+ /usr/include/bits/floatn.h /usr/include/bits/floatn-common.h \
+ /usr/include/bits/types/locale_t.h /usr/include/bits/types/__locale_t.h \
+ /usr/include/sys/types.h /usr/include/bits/types/clock_t.h \
+ /usr/include/bits/types/clockid_t.h /usr/include/bits/types/time_t.h \
+ /usr/include/bits/types/timer_t.h /usr/include/endian.h \
+ /usr/include/bits/endian.h /usr/include/bits/endianness.h \
+ /usr/include/bits/byteswap.h /usr/include/bits/uintn-identity.h \
+ /usr/include/sys/select.h /usr/include/bits/select.h \
+ /usr/include/bits/types/sigset_t.h /usr/include/bits/types/__sigset_t.h \
+ /usr/include/bits/types/struct_timeval.h \
+ /usr/include/bits/types/struct_timespec.h \
+ /usr/include/bits/pthreadtypes.h /usr/include/bits/thread-shared-types.h \
+ /usr/include/bits/pthreadtypes-arch.h \
+ /usr/include/bits/atomic_wide_counter.h /usr/include/bits/struct_mutex.h \
+ /usr/include/bits/struct_rwlock.h /usr/include/alloca.h \
+ /usr/include/bits/stdlib-bsearch.h /usr/include/bits/stdlib-float.h \
+ /usr/include/c++/15/bits/std_abs.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bgfx/include/bgfx/defines.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bgfx/src/config.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/bx.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/platform.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/config.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/constants.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/macros.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/debug.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/typetraits.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/typetraits.inl \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/bx.inl \
+ /usr/include/inttypes.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/allocator.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/bx.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/uint32_t.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/uint32_t.inl \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/allocator.inl \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/cpu.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/cpu.inl \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/debug.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/endian.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/endian.inl \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/error.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/string.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/allocator.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/timer.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/timer.inl \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/string.inl \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/error.inl \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/float4x4_t.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/simd_t.h \
+ /usr/lib/gcc/x86_64-redhat-linux/15/include/emmintrin.h \
+ /usr/lib/gcc/x86_64-redhat-linux/15/include/xmmintrin.h \
+ /usr/lib/gcc/x86_64-redhat-linux/15/include/mmintrin.h \
+ /usr/lib/gcc/x86_64-redhat-linux/15/include/mm_malloc.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/simd128_swizzle.inl \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/simd128_sse.inl \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/simd128_swizzle.inl \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/simd128_ref.inl \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/simd256_ref.inl \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/simd_ni.inl \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/float4x4_t.inl \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/handlealloc.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/handlealloc.inl \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/hash.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/hash.inl \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/math.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/math.inl \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/simd_t.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/uint32_t.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/mutex.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/mutex.inl \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/os.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/filepath.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/error.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/os.inl \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/readerwriter.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/endian.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/math.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/readerwriter.inl \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/ringbuffer.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/cpu.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/ringbuffer.inl \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/sort.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/sort.inl \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/string.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/thread.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/mpscqueue.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/mutex.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/spscqueue.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/semaphore.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/spscqueue.inl \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/mpscqueue.inl \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/timer.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bgfx/include/bgfx/platform.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bgfx/include/bgfx/bgfx.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bimg/include/bimg/bimg.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bgfx/src/shader.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bgfx/src/vertexlayout.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bgfx/src/version.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/tinystl/string.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/tinystl/allocator.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/tinystl/stddef.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/tinystl/hash.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/tinystl/unordered_map.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/tinystl/buffer.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/tinystl/new.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/tinystl/traits.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/tinystl/hash_base.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/tinystl/unordered_set.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/tinystl/vector.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/pixelformat.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bx/include/bx/inline/pixelformat.inl \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bgfx/src/renderer_webgpu.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bgfx/src/renderer.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bgfx/src/debug_renderdoc.h \
+ /home/lance/Documents/Code/Game/build-x11-validate/_deps/bgfx_cmake-src/bgfx/3rdparty/dawn/include/webgpu/webgpu.h \
+ /usr/include/c++/15/math.h /usr/include/c++/15/cmath \
+ /usr/include/c++/15/bits/requires_hosted.h \
+ /usr/include/c++/15/bits/cpp_type_traits.h \
+ /usr/include/c++/15/bits/version.h /usr/include/c++/15/type_traits \
+ /usr/include/c++/15/ext/type_traits.h /usr/include/math.h \
+ /usr/include/bits/math-vector.h /usr/include/bits/libm-simd-decl-stubs.h \
+ /usr/include/bits/flt-eval-method.h /usr/include/bits/fp-logb.h \
+ /usr/include/bits/fp-fast.h /usr/include/bits/mathcalls-macros.h \
+ /usr/include/bits/mathcalls-helper-functions.h \
+ /usr/include/bits/mathcalls.h /usr/include/bits/mathcalls-narrow.h \
+ /usr/include/bits/iscanonical.h /usr/include/c++/15/bits/specfun.h \
+ /usr/include/c++/15/bits/stl_algobase.h \
+ /usr/include/c++/15/bits/functexcept.h \
+ /usr/include/c++/15/bits/exception_defines.h \
+ /usr/include/c++/15/ext/numeric_traits.h \
+ /usr/include/c++/15/bits/stl_pair.h /usr/include/c++/15/bits/move.h \
+ /usr/include/c++/15/bits/utility.h /usr/include/c++/15/compare \
+ /usr/include/c++/15/concepts \
+ /usr/include/c++/15/bits/stl_iterator_base_types.h \
+ /usr/include/c++/15/bits/iterator_concepts.h \
+ /usr/include/c++/15/bits/ptr_traits.h \
+ /usr/include/c++/15/bits/ranges_cmp.h \
+ /usr/include/c++/15/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/15/bits/concept_check.h \
+ /usr/include/c++/15/debug/assertions.h \
+ /usr/include/c++/15/bits/stl_iterator.h /usr/include/c++/15/new \
+ /usr/include/c++/15/bits/exception.h \
+ /usr/include/c++/15/bits/stl_construct.h \
+ /usr/include/c++/15/debug/debug.h \
+ /usr/include/c++/15/bits/predefined_ops.h /usr/include/c++/15/bit \
+ /usr/include/c++/15/limits /usr/include/c++/15/tr1/gamma.tcc \
+ /usr/include/c++/15/tr1/special_function_util.h \
+ /usr/include/c++/15/tr1/bessel_function.tcc \
+ /usr/include/c++/15/tr1/beta_function.tcc \
+ /usr/include/c++/15/tr1/ell_integral.tcc \
+ /usr/include/c++/15/tr1/exp_integral.tcc \
+ /usr/include/c++/15/tr1/hypergeometric.tcc \
+ /usr/include/c++/15/tr1/legendre_function.tcc \
+ /usr/include/c++/15/tr1/modified_bessel_func.tcc \
+ /usr/include/c++/15/tr1/poly_hermite.tcc \
+ /usr/include/c++/15/tr1/poly_laguerre.tcc \
+ /usr/include/c++/15/tr1/riemann_zeta.tcc
