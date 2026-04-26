@@ -76,9 +76,9 @@ add_library(game_shared STATIC
     src/renderer/bgfx_renderer.c
     src/ui/start_menu.c
     src/app/game_app.c
-    src/environment/camera_3d.cpp
-    src/environment/scene_3d.cpp
-    src/environment/environment_3d.cpp
+    src/environment/camera_3d.c
+    src/environment/scene_3d.c
+    src/environment/environment_3d.c
 )
 
 target_include_directories(game_shared PUBLIC ${CMAKE_SOURCE_DIR}/include)
