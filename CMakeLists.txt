@@ -39,49 +39,59 @@ if(USE_SDL2 AND NOT SDL2_TARGET)
     set(USE_SDL2 OFF)
 endif()
 
+include(FetchContent)
+
+set(BGFX_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(BGFX_BUILD_TOOLS OFF CACHE BOOL "" FORCE)
+set(BGFX_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(BGFX_INSTALL OFF CACHE BOOL "" FORCE)
+
+FetchContent_Declare(
+    bgfx_cmake
+    GIT_REPOSITORY https://github.com/bkaradzic/bgfx.cmake.git
+    GIT_TAG master
+)
+FetchContent_MakeAvailable(bgfx_cmake)
+
+set(BGFX_TARGET "")
+if(TARGET bgfx)
+    set(BGFX_TARGET bgfx)
+elseif(TARGET bgfx::bgfx)
+    set(BGFX_TARGET bgfx::bgfx)
+endif()
+
+if(NOT BGFX_TARGET)
+    message(FATAL_ERROR "Failed to resolve bgfx target from bgfx.cmake.")
+endif()
+
+function(apply_game_warning_options target)
+    if(MSVC)
+        target_compile_options(${target} PRIVATE /W4)
+    else()
+        target_compile_options(${target} PRIVATE $<$<COMPILE_LANGUAGE:C>:-Wall -Wextra -Wpedantic> $<$<COMPILE_LANGUAGE:CXX>:-Wall -Wextra -Wpedantic>)
+    endif()
+endfunction()
+
+add_library(game_shared STATIC
+    src/renderer/bgfx_renderer.c
+    src/ui/start_menu.c
+    src/app/game_app.c
+    src/environment/camera_3d.cpp
+    src/environment/scene_3d.cpp
+    src/environment/environment_3d.cpp
+)
+
+target_include_directories(game_shared PUBLIC ${CMAKE_SOURCE_DIR}/include)
+target_link_libraries(game_shared PUBLIC ${BGFX_TARGET} bx)
+apply_game_warning_options(game_shared)
+
 if(USE_SDL2)
-    include(FetchContent)
-
-    set(BGFX_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-    set(BGFX_BUILD_TOOLS OFF CACHE BOOL "" FORCE)
-    set(BGFX_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-    set(BGFX_INSTALL OFF CACHE BOOL "" FORCE)
-
-    FetchContent_Declare(
-        bgfx_cmake
-        GIT_REPOSITORY https://github.com/bkaradzic/bgfx.cmake.git
-        GIT_TAG master
-    )
-    FetchContent_MakeAvailable(bgfx_cmake)
-
-    set(BGFX_TARGET "")
-    if(TARGET bgfx)
-        set(BGFX_TARGET bgfx)
-    elseif(TARGET bgfx::bgfx)
-        set(BGFX_TARGET bgfx::bgfx)
-    endif()
-
-    if(NOT BGFX_TARGET)
-        message(FATAL_ERROR "Failed to resolve bgfx target from bgfx.cmake.")
-    endif()
-
     add_executable(game
         src/main_sdl.c
         src/sdl_window.c
-        src/renderer/bgfx_renderer.c
-        src/environment/camera_3d.cpp
-        src/environment/scene_3d.cpp
-        src/environment/environment_3d.cpp
     )
 
-    target_include_directories(game PRIVATE ${CMAKE_SOURCE_DIR}/include)
-    target_compile_definitions(game PRIVATE USE_SDL2)
-    if(MSVC)
-        target_compile_options(game PRIVATE /W4)
-    else()
-        target_compile_options(game PRIVATE $<$<COMPILE_LANGUAGE:C>:-Wall -Wextra -Wpedantic> $<$<COMPILE_LANGUAGE:CXX>:-Wall -Wextra -Wpedantic>)
-    endif()
-    target_link_libraries(game PRIVATE ${SDL2_TARGET} ${BGFX_TARGET} bx)
+    target_link_libraries(game PRIVATE game_shared ${SDL2_TARGET})
     # bgfx is C++, so force C++ linker even though our app sources are C.
     set_target_properties(game PROPERTIES LINKER_LANGUAGE CXX)
 else()
@@ -91,10 +101,8 @@ else()
         src/main.c
     )
 
-    if(MSVC)
-        target_compile_options(game PRIVATE /W4)
-    else()
-        target_compile_options(game PRIVATE $<$<COMPILE_LANGUAGE:C>:-Wall -Wextra -Wpedantic> $<$<COMPILE_LANGUAGE:CXX>:-Wall -Wextra -Wpedantic>)
-    endif()
-    target_link_libraries(game PRIVATE X11::X11)
+    target_link_libraries(game PRIVATE game_shared X11::X11)
+    set_target_properties(game PROPERTIES LINKER_LANGUAGE CXX)
 endif()
+
+apply_game_warning_options(game)
