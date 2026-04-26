@@ -107,16 +107,16 @@ static void build_look_at(float view[16], const float eye[3], const float target
         return;
     }
 
-    vec3_cross(right, forward, up);
+    vec3_cross(right, up, forward);
     if (!normalize_vector(right)) {
-        vec3_cross(right, forward, fallback_up);
+        vec3_cross(right, fallback_up, forward);
         if (!normalize_vector(right)) {
             set_identity(view);
             return;
         }
     }
 
-    vec3_cross(camera_up, right, forward);
+    vec3_cross(camera_up, forward, right);
 
     view[0] = right[0];
     view[1] = camera_up[0];
@@ -209,7 +209,7 @@ void camera_3d_update(Camera3D *camera, const CameraInputState *input, float del
         return;
     }
 
-    camera->yaw_degrees = wrap_degrees(camera->yaw_degrees + mouse_dx * camera->mouse_sensitivity);
+    camera->yaw_degrees = wrap_degrees(camera->yaw_degrees - mouse_dx * camera->mouse_sensitivity);
     camera->pitch_degrees = clampf_local(camera->pitch_degrees - mouse_dy * camera->mouse_sensitivity, -kPitchLimit, kPitchLimit);
 
     forward_from_angles(camera->yaw_degrees, camera->pitch_degrees, forward);
