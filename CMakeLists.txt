@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.20)
 
 project(Game VERSION 0.1.0 LANGUAGES C CXX)
 
+# Export `compile_commands.json` so VS Code C/C++ extension can resolve includes
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
