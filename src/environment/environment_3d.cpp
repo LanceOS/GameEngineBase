@@ -1,4 +1,4 @@
-#include "environment_3d.h"
+#include "environment/environment_3d.h"
 
 #include <bgfx/c99/bgfx.h>
 #include <bx/math.h>

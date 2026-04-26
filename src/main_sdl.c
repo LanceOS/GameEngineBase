@@ -3,9 +3,8 @@
 #include <stdio.h>
 
 #include <SDL2/SDL.h>
-
-#include "bgfx_renderer.h"
-#include "environment_3d.h"
+#include "renderer/bgfx_renderer.h"
+#include "environment/environment_3d.h"
 #include "sdl_window.h"
 
 static uint16_t to_u16(uint32_t value) {

@@ -68,8 +68,8 @@ if(USE_SDL2)
     add_executable(game
         src/main_sdl.c
         src/sdl_window.c
-        src/bgfx_renderer.c
-        src/environment_3d.cpp
+        src/renderer/bgfx_renderer.c
+        src/environment/environment_3d.cpp
     )
 
     target_include_directories(game PRIVATE ${CMAKE_SOURCE_DIR}/include)
