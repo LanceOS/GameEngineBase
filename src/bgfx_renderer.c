@@ -62,9 +62,6 @@ bool bgfx_renderer_init(BgfxRenderer *renderer, void *native_display, void *nati
     renderer->width = clamped_width;
     renderer->height = clamped_height;
     renderer->initialized = true;
-
-    bgfx_set_view_clear(0, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x1a1f2cff, 1.0f, 0);
-    bgfx_set_view_rect(0, 0, 0, renderer->width, renderer->height);
     return true;
 }
 
@@ -77,7 +74,6 @@ void bgfx_renderer_resize(BgfxRenderer *renderer, uint16_t width, uint16_t heigh
     renderer->height = clamp_dimension(height);
 
     bgfx_reset(renderer->width, renderer->height, BGFX_RESET_VSYNC, BGFX_TEXTURE_FORMAT_COUNT);
-    bgfx_set_view_rect(0, 0, 0, renderer->width, renderer->height);
 }
 
 void bgfx_renderer_frame(BgfxRenderer *renderer) {
@@ -85,7 +81,6 @@ void bgfx_renderer_frame(BgfxRenderer *renderer) {
         return;
     }
 
-    bgfx_touch(0);
     bgfx_frame(false);
 }
 

@@ -6,7 +6,7 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
@@ -69,6 +69,7 @@ if(USE_SDL2)
         src/main_sdl.c
         src/sdl_window.c
         src/bgfx_renderer.c
+        src/environment_3d.cpp
     )
 
     target_include_directories(game PRIVATE ${CMAKE_SOURCE_DIR}/include)
