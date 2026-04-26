@@ -6,7 +6,7 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
@@ -68,12 +68,19 @@ if(USE_SDL2)
     add_executable(game
         src/main_sdl.c
         src/sdl_window.c
-        src/bgfx_renderer.c
+        src/renderer/bgfx_renderer.c
+        src/environment/camera_3d.cpp
+        src/environment/scene_3d.cpp
+        src/environment/environment_3d.cpp
     )
 
     target_include_directories(game PRIVATE ${CMAKE_SOURCE_DIR}/include)
     target_compile_definitions(game PRIVATE USE_SDL2)
-    target_compile_options(game PRIVATE -Wall -Wextra -Wpedantic)
+    if(MSVC)
+        target_compile_options(game PRIVATE /W4)
+    else()
+        target_compile_options(game PRIVATE $<$<COMPILE_LANGUAGE:C>:-Wall -Wextra -Wpedantic> $<$<COMPILE_LANGUAGE:CXX>:-Wall -Wextra -Wpedantic>)
+    endif()
     target_link_libraries(game PRIVATE ${SDL2_TARGET} ${BGFX_TARGET} bx)
     # bgfx is C++, so force C++ linker even though our app sources are C.
     set_target_properties(game PROPERTIES LINKER_LANGUAGE CXX)
@@ -84,6 +91,10 @@ else()
         src/main.c
     )
 
-    target_compile_options(game PRIVATE -Wall -Wextra -Wpedantic)
+    if(MSVC)
+        target_compile_options(game PRIVATE /W4)
+    else()
+        target_compile_options(game PRIVATE $<$<COMPILE_LANGUAGE:C>:-Wall -Wextra -Wpedantic> $<$<COMPILE_LANGUAGE:CXX>:-Wall -Wextra -Wpedantic>)
+    endif()
     target_link_libraries(game PRIVATE X11::X11)
 endif()
