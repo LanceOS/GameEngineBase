@@ -84,9 +84,9 @@ static void build_look_at(float view[16], const float eye[3], const float target
         return;
     }
 
-    vec3_cross(right, forward, up);
+    vec3_cross(right, up, forward);
     if (!normalize_vector(right)) {
-        vec3_cross(right, forward, fallback_up);
+        vec3_cross(right, fallback_up, forward);
         if (!normalize_vector(right)) {
             set_identity(view);
             return;
