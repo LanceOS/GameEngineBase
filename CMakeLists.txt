@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.20)
 
 project(Game VERSION 0.1.0 LANGUAGES C CXX)
 
+# Export `compile_commands.json` so VS Code C/C++ extension can resolve includes
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
@@ -76,9 +79,9 @@ add_library(game_shared STATIC
     src/renderer/bgfx_renderer.c
     src/ui/start_menu.c
     src/app/game_app.c
-    src/environment/camera_3d.cpp
-    src/environment/scene_3d.cpp
-    src/environment/environment_3d.cpp
+    src/environment/camera_3d.c
+    src/environment/scene_3d.c
+    src/environment/environment_3d.c
 )
 
 target_include_directories(game_shared PUBLIC ${CMAKE_SOURCE_DIR}/include)
