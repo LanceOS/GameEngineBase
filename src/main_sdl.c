@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 #include <SDL2/SDL.h>
+#include "environment/camera_3d.h"
 #include "renderer/bgfx_renderer.h"
 #include "environment/environment_3d.h"
 #include "sdl_window.h"
@@ -35,6 +36,21 @@ int main(void) {
         /* Continue running the event loop so the app remains responsive in headless environments. */
     }
 
+    Camera3D *camera = NULL;
+    bool camera_ok = false;
+    if (renderer_ok) {
+        camera = camera_3d_create();
+        if (camera != NULL) {
+            camera_ok = true;
+            if (SDL_SetRelativeMouseMode(SDL_TRUE) != 0) {
+                fprintf(stderr, "Warning: SDL_SetRelativeMouseMode failed: %s\n", SDL_GetError());
+            }
+            SDL_ShowCursor(SDL_DISABLE);
+        } else {
+            fprintf(stderr, "Warning: camera_3d_create failed; running with the environment fallback view.\n");
+        }
+    }
+
     Environment3D *environment = NULL;
     bool environment_ok = false;
     if (renderer_ok) {
@@ -48,8 +64,42 @@ int main(void) {
         }
     }
 
+    const uint64_t performance_frequency = SDL_GetPerformanceFrequency();
+    uint64_t previous_counter = SDL_GetPerformanceCounter();
+
     while (sdl_window_is_running(&game)) {
         sdl_window_poll_events(&game);
+
+        uint64_t current_counter = SDL_GetPerformanceCounter();
+        double delta_seconds = 0.0;
+        if (performance_frequency > 0) {
+            delta_seconds = (double)(current_counter - previous_counter) / (double)performance_frequency;
+        }
+        previous_counter = current_counter;
+        if (delta_seconds > 0.25) {
+            delta_seconds = 0.25;
+        }
+
+        CameraInputState camera_input = {0};
+        const uint8_t *keyboard_state = SDL_GetKeyboardState(NULL);
+        if (keyboard_state != NULL) {
+            camera_input.move_forward = keyboard_state[SDL_SCANCODE_W] != 0;
+            camera_input.move_backward = keyboard_state[SDL_SCANCODE_S] != 0;
+            camera_input.move_left = keyboard_state[SDL_SCANCODE_A] != 0;
+            camera_input.move_right = keyboard_state[SDL_SCANCODE_D] != 0;
+            camera_input.move_up = keyboard_state[SDL_SCANCODE_SPACE] != 0;
+            camera_input.move_down = keyboard_state[SDL_SCANCODE_LCTRL] != 0 || keyboard_state[SDL_SCANCODE_RCTRL] != 0;
+        }
+
+        int mouse_dx = 0;
+        int mouse_dy = 0;
+        SDL_GetRelativeMouseState(&mouse_dx, &mouse_dy);
+        camera_input.mouse_delta_x = (float)mouse_dx;
+        camera_input.mouse_delta_y = (float)mouse_dy;
+
+        if (camera_ok) {
+            camera_3d_update(camera, &camera_input, (float)delta_seconds);
+        }
 
         uint32_t resized_width = 0;
         uint32_t resized_height = 0;
@@ -63,7 +113,7 @@ int main(void) {
         }
 
         if (environment_ok) {
-            environment_3d_frame(environment);
+            environment_3d_frame(environment, camera_ok ? camera : NULL);
         }
 
         if (renderer_ok) {
@@ -74,6 +124,11 @@ int main(void) {
 
     if (environment_ok) {
         environment_3d_destroy(environment);
+    }
+    if (camera_ok) {
+        SDL_SetRelativeMouseMode(SDL_FALSE);
+        SDL_ShowCursor(SDL_ENABLE);
+        camera_3d_destroy(camera);
     }
     if (renderer_ok) {
         bgfx_renderer_shutdown(&renderer);
