@@ -1,4 +1,4 @@
-#include "../include/sdl_window.h"
+#include "sdl_window.h"
 
 #include <SDL2/SDL_syswm.h>
 
@@ -88,12 +88,15 @@ bool sdl_window_consume_resize(SDLGameState *game, uint32_t *new_width, uint32_t
     return true;
 }
 
-bool sdl_window_native_handles(SDLGameState *game, void **native_display, void **native_window) {
+bool sdl_window_native_handles(SDLGameState *game, void **native_display, void **native_window, uint32_t *native_window_type) {
     if (native_display != NULL) {
         *native_display = NULL;
     }
     if (native_window != NULL) {
         *native_window = NULL;
+    }
+    if (native_window_type != NULL) {
+        *native_window_type = 0;
     }
 
     if (game == NULL || game->window == NULL || native_window == NULL) {
@@ -109,27 +112,38 @@ bool sdl_window_native_handles(SDLGameState *game, void **native_display, void *
     }
 
     switch (wm_info.subsystem) {
+#if defined(SDL_VIDEO_DRIVER_WINDOWS)
         case SDL_SYSWM_WINDOWS:
-            *native_window = wm_info.info.win.window;
+            *native_window = (void *)(uintptr_t)wm_info.info.win.window;
             return true;
+#endif
 
+#if defined(SDL_VIDEO_DRIVER_X11) && !defined(SDL2COMPAT_DISABLE_X11)
         case SDL_SYSWM_X11:
             if (native_display != NULL) {
                 *native_display = wm_info.info.x11.display;
             }
             *native_window = (void *)(uintptr_t)wm_info.info.x11.window;
             return true;
+#endif
 
+#if defined(SDL_VIDEO_DRIVER_WAYLAND)
         case SDL_SYSWM_WAYLAND:
             if (native_display != NULL) {
                 *native_display = wm_info.info.wl.display;
             }
             *native_window = wm_info.info.wl.surface;
+            if (native_window_type != NULL) {
+                *native_window_type = 1;
+            }
             return true;
+#endif
 
+#if defined(SDL_VIDEO_DRIVER_COCOA)
         case SDL_SYSWM_COCOA:
-            *native_window = wm_info.info.cocoa.window;
+            *native_window = (void *)(uintptr_t)wm_info.info.cocoa.window;
             return true;
+#endif
 
         default:
             fprintf(stderr, "Unsupported SDL subsystem (%d) for bgfx platform data.\n", (int)wm_info.subsystem);

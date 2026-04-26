@@ -74,7 +74,7 @@ if(USE_SDL2)
     target_include_directories(game PRIVATE ${CMAKE_SOURCE_DIR}/include)
     target_compile_definitions(game PRIVATE USE_SDL2)
     target_compile_options(game PRIVATE -Wall -Wextra -Wpedantic)
-    target_link_libraries(game PRIVATE ${SDL2_TARGET} ${BGFX_TARGET})
+    target_link_libraries(game PRIVATE ${SDL2_TARGET} ${BGFX_TARGET} bx)
     # bgfx is C++, so force C++ linker even though our app sources are C.
     set_target_properties(game PROPERTIES LINKER_LANGUAGE CXX)
 else()
