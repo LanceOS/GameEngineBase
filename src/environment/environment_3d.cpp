@@ -1,5 +1,6 @@
 #include "environment/environment_3d.h"
 #include "environment/camera_3d.h"
+#include "environment/scene_3d.h"
 
 #include <bgfx/c99/bgfx.h>
 #include <bx/math.h>
@@ -34,7 +35,12 @@ public:
         , initialized(false) {
         std::memset(view, 0, sizeof(view));
         std::memset(proj, 0, sizeof(proj));
+        scene = nullptr;
         build_default_view(view);
+    }
+
+    ~Environment3DImpl() {
+        scene_3d_destroy(scene);
     }
 
     bool init(uint16_t new_width, uint16_t new_height) {
@@ -47,6 +53,15 @@ public:
         width = clamp_dimension(new_width);
         height = clamp_dimension(new_height);
         homogeneous_depth = caps->homogeneousDepth;
+
+        scene = scene_3d_create();
+        if (scene == nullptr || !scene_3d_init(scene)) {
+            std::fputs("environment_3d_init failed: scene unavailable.\n", stderr);
+            scene_3d_destroy(scene);
+            scene = nullptr;
+            return false;
+        }
+
         initialized = true;
 
         rebuild_matrices();
@@ -76,6 +91,7 @@ public:
         }
 
         apply_view_state(view_matrix);
+        scene_3d_frame(scene);
         bgfx_touch(kViewId);
     }
 
@@ -95,6 +111,7 @@ private:
     uint16_t height;
     bool homogeneous_depth;
     bool initialized;
+    Scene3D *scene;
     float view[16];
     float proj[16];
 };

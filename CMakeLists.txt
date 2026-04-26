@@ -70,6 +70,7 @@ if(USE_SDL2)
         src/sdl_window.c
         src/renderer/bgfx_renderer.c
         src/environment/camera_3d.cpp
+        src/environment/scene_3d.cpp
         src/environment/environment_3d.cpp
     )
 
