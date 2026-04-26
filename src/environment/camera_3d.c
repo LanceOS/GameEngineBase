@@ -116,7 +116,7 @@ static void build_look_at(float view[16], const float eye[3], const float target
         }
     }
 
-    vec3_cross(camera_up, right, forward);
+    vec3_cross(camera_up, forward, right);
 
     view[0] = right[0];
     view[1] = camera_up[0];
