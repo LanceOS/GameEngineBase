@@ -10,6 +10,7 @@
 #include <time.h>
 
 #include "app/game_app.h"
+#include "controls/controls.h"
 
 typedef struct GameState {
     Display *display;
@@ -294,7 +295,15 @@ int main(void) {
         .quit_requested = false,
     };
 
+    Controls *controls = NULL;
+
     if (!create_window(&game)) {
+        return EXIT_FAILURE;
+    }
+
+    controls = controls_create_for_x11(game.display, (unsigned long)game.window, game.screen);
+    if (controls == NULL) {
+        destroy_window(&game);
         return EXIT_FAILURE;
     }
 
@@ -305,59 +314,15 @@ int main(void) {
     }
 
     while (game.running) {
-        while (XPending(game.display) > 0) {
-            XEvent event;
-            XNextEvent(game.display, &event);
-            process_event(&game, &event);
+        controls_poll_events(controls);
+
+        uint16_t resized_w = 0, resized_h = 0;
+        if (controls_consume_resize(controls, &resized_w, &resized_h)) {
+            game_app_resize(&app, resized_w, resized_h);
         }
 
-        if (game.resized) {
-            game_app_resize(&app, game.width, game.height);
-            game.resized = false;
-        }
-
-        int window_origin_x = 0;
-        int window_origin_y = 0;
-        if (!query_window_origin(&game, &window_origin_x, &window_origin_y)) {
-            window_origin_x = 0;
-            window_origin_y = 0;
-        }
-
-        int mouse_root_x = game.mouse_x;
-        int mouse_root_y = game.mouse_y;
-        if (query_pointer_root_position(&game, &mouse_root_x, &mouse_root_y)) {
-            game.mouse_x = mouse_root_x;
-            game.mouse_y = mouse_root_y;
-        }
-
-        const int local_mouse_x = mouse_root_x - window_origin_x;
-        const int local_mouse_y = mouse_root_y - window_origin_y;
-
-        GameFrameInput input = {
-            .quit_requested = game.quit_requested,
-            .menu_up = game.menu_up,
-            .menu_down = game.menu_down,
-            .menu_activate = game.menu_activate,
-            .mouse_moved = local_mouse_x != game.previous_mouse_x || local_mouse_y != game.previous_mouse_y,
-            .mouse_click = game.mouse_click,
-            .mouse_x = local_mouse_x,
-            .mouse_y = local_mouse_y,
-            .mouse_delta_x = (float)(local_mouse_x - game.previous_mouse_x),
-            .mouse_delta_y = (float)(local_mouse_y - game.previous_mouse_y),
-            .move_forward = game.move_forward,
-            .move_backward = game.move_backward,
-            .move_left = game.move_left,
-            .move_right = game.move_right,
-            .move_up = game.move_up,
-            .move_down = game.move_down,
-        };
-
-        game.previous_mouse_x = local_mouse_x;
-        game.previous_mouse_y = local_mouse_y;
-        game.menu_up = false;
-        game.menu_down = false;
-        game.menu_activate = false;
-        game.mouse_click = false;
+        GameFrameInput input = {0};
+        controls_get_frame_input(controls, &input, false);
 
         GameAppAction action = game_app_update(&app, &input, 1.0f / 60.0f);
         if (action == GAME_APP_ACTION_QUIT) {
@@ -370,6 +335,7 @@ int main(void) {
     }
 
     game_app_destroy(&app);
+    controls_destroy(controls);
     destroy_window(&game);
     return EXIT_SUCCESS;
 }

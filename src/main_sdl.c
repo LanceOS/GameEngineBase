@@ -7,6 +7,7 @@
 
 #include "app/game_app.h"
 #include "sdl_window.h"
+#include "controls/controls.h"
 
 static uint16_t to_u16(uint32_t value) {
     return value > UINT16_MAX ? UINT16_MAX : (uint16_t)value;
@@ -15,8 +16,7 @@ static uint16_t to_u16(uint32_t value) {
 int main(void) {
     SDLGameState game;
     GameApp app;
-    int previous_mouse_x = 0;
-    int previous_mouse_y = 0;
+    Controls *controls = NULL;
 
     SDL_SetMainReady();
 
@@ -32,6 +32,12 @@ int main(void) {
         return EXIT_FAILURE;
     }
 
+    controls = controls_create_for_sdl(&game);
+    if (controls == NULL) {
+        sdl_window_shutdown(&game);
+        return EXIT_FAILURE;
+    }
+
     if (!game_app_init(&app, native_display, native_window, native_window_type, to_u16(game.width), to_u16(game.height))) {
         sdl_window_shutdown(&game);
         return EXIT_FAILURE;
@@ -43,98 +49,9 @@ int main(void) {
     while (sdl_window_is_running(&game)) {
         GameFrameInput input = {0};
         const GameAppMode current_mode = game_app_mode(&app);
-        SDL_Event event;
 
-        while (SDL_PollEvent(&event) != 0) {
-            switch (event.type) {
-                case SDL_QUIT:
-                    input.quit_requested = true;
-                    break;
-
-                case SDL_KEYDOWN:
-                    if (event.key.repeat == 0) {
-                        switch (event.key.keysym.sym) {
-                            case SDLK_ESCAPE:
-                                input.quit_requested = true;
-                                break;
-
-                            case SDLK_UP:
-                                input.menu_up = true;
-                                break;
-
-                            case SDLK_DOWN:
-                                input.menu_down = true;
-                                break;
-
-                            case SDLK_RETURN:
-                            case SDLK_KP_ENTER:
-                            case SDLK_SPACE:
-                                input.menu_activate = true;
-                                break;
-
-                            default:
-                                break;
-                        }
-                    }
-                    break;
-
-                case SDL_MOUSEBUTTONDOWN:
-                    if (event.button.button == SDL_BUTTON_LEFT) {
-                        input.mouse_click = true;
-                    }
-                    break;
-
-                case SDL_MOUSEMOTION:
-                    break;
-
-                case SDL_WINDOWEVENT:
-                    if (event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED || event.window.event == SDL_WINDOWEVENT_RESIZED) {
-                        game.width = (uint32_t)event.window.data1;
-                        game.height = (uint32_t)event.window.data2;
-                        game.resized = true;
-                    } else if (event.window.event == SDL_WINDOWEVENT_CLOSE) {
-                        input.quit_requested = true;
-                    }
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        const uint8_t *keyboard_state = SDL_GetKeyboardState(NULL);
-        if (keyboard_state != NULL) {
-            input.move_forward = keyboard_state[SDL_SCANCODE_W] != 0;
-            input.move_backward = keyboard_state[SDL_SCANCODE_S] != 0;
-            input.move_left = keyboard_state[SDL_SCANCODE_A] != 0;
-            input.move_right = keyboard_state[SDL_SCANCODE_D] != 0;
-            input.move_up = keyboard_state[SDL_SCANCODE_SPACE] != 0;
-            input.move_down = keyboard_state[SDL_SCANCODE_LCTRL] != 0 || keyboard_state[SDL_SCANCODE_RCTRL] != 0;
-        }
-
-        int window_x = 0;
-        int window_y = 0;
-        if (game.window != NULL) {
-            SDL_GetWindowPosition(game.window, &window_x, &window_y);
-        }
-
-        int mouse_x = 0;
-        int mouse_y = 0;
-        SDL_GetGlobalMouseState(&mouse_x, &mouse_y);
-
-        const int local_mouse_x = mouse_x - window_x;
-        const int local_mouse_y = mouse_y - window_y;
-        input.mouse_x = local_mouse_x;
-        input.mouse_y = local_mouse_y;
-        input.mouse_moved = local_mouse_x != previous_mouse_x || local_mouse_y != previous_mouse_y;
-
-        if (current_mode == GAME_APP_MODE_GAMEPLAY) {
-            int mouse_dx = 0;
-            int mouse_dy = 0;
-            SDL_GetRelativeMouseState(&mouse_dx, &mouse_dy);
-            input.mouse_delta_x = (float)mouse_dx;
-            input.mouse_delta_y = (float)mouse_dy;
-        }
+        controls_poll_events(controls);
+        controls_get_frame_input(controls, &input, current_mode == GAME_APP_MODE_GAMEPLAY);
 
         uint64_t current_counter = SDL_GetPerformanceCounter();
         double delta_seconds = 0.0;
@@ -152,18 +69,15 @@ int main(void) {
             game_app_resize(&app, to_u16(resized_width), to_u16(resized_height));
         }
 
-        previous_mouse_x = local_mouse_x;
-        previous_mouse_y = local_mouse_y;
-
         GameAppAction action = game_app_update(&app, &input, (float)delta_seconds);
         if (action == GAME_APP_ACTION_QUIT) {
             game.running = false;
         } else {
             if (action == GAME_APP_ACTION_STARTED_GAMEPLAY) {
-                if (SDL_SetRelativeMouseMode(SDL_TRUE) != 0) {
-                    fprintf(stderr, "Warning: SDL_SetRelativeMouseMode failed: %s\n", SDL_GetError());
+                if (!controls_set_relative_mouse_mode(controls, true)) {
+                    fprintf(stderr, "Warning: controls_set_relative_mouse_mode failed\n");
                 }
-                SDL_ShowCursor(SDL_DISABLE);
+                controls_set_cursor_visible(controls, false);
             }
 
             game_app_render(&app);
@@ -172,11 +86,12 @@ int main(void) {
     }
 
     if (game_app_mode(&app) == GAME_APP_MODE_GAMEPLAY) {
-        SDL_SetRelativeMouseMode(SDL_FALSE);
-        SDL_ShowCursor(SDL_ENABLE);
+        controls_set_relative_mouse_mode(controls, false);
+        controls_set_cursor_visible(controls, true);
     }
 
     game_app_destroy(&app);
+    controls_destroy(controls);
     sdl_window_shutdown(&game);
     return EXIT_SUCCESS;
 }

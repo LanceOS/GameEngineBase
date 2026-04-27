@@ -92,7 +92,9 @@ if(USE_SDL2)
     add_executable(game
         src/main_sdl.c
         src/sdl_window.c
+        src/controls/controls_sdl.c
     )
+    
 
     target_link_libraries(game PRIVATE game_shared ${SDL2_TARGET})
     # bgfx is C++, so force C++ linker even though our app sources are C.
@@ -102,6 +104,7 @@ else()
 
     add_executable(game
         src/main.c
+        src/controls/controls_x11.c
     )
 
     target_link_libraries(game PRIVATE game_shared X11::X11)
